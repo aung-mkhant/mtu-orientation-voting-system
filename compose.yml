@@ -1,0 +1,33 @@
+services:
+  # server:
+  #   build:
+  #     context: .
+  #   ports:
+  #     - 3000:3000
+  postgres:
+    image: postgres:17.4
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    hostname: postgres
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/pg_user
+      POSTGRES_DB: voting_db
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_pw
+      TZ: America/Chicago
+      PGTZ: America/Chicago
+    secrets:
+      - pg_user
+      - pg_pw
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./logs:/var/log/postgresql
+      - ./certs:/var/lib/postgresql/certs
+    restart: unless-stopped
+    # network_mode: "host"
+
+secrets:
+  pg_user:
+    file: ./secrets/pg_user.txt
+  pg_pw:
+    file: ./secrets/pg_pw.txt

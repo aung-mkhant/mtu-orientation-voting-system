@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container">
+    <main>
+      <div class="p-5 mb-4 bg-light rounded-3">
+        <h1>Voting Page</h1>
+
+        <% maleCandidates.forEach(candidate => { %>
+      <div class="card">
+        <img src="<%= candidate.imagePath || '/images/default.jpg' %>" alt="<%= candidate.name %>">
+        <h3>#<%= candidate.number %> <%= candidate.name %></h3>
+        <p><%= candidate.description %></p>
+      </div>
+    <% }) %>
+
+      </div>
+    </main>
+
+    <footer><%- include('../partials/footer'); %></footer>
+  </body>
+</html>
