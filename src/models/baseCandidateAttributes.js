@@ -33,7 +33,7 @@ module.exports = (DataTypes) => ({
     type: DataTypes.STRING,
     allowNull: true,
     get() {
-      const rawPath = $this.getDataValue("imagePath")
+      const rawPath = this.getDataValue("imagePath")
       if (!rawPath) return
       const genderValue = this.getDataValue("gender")
       return `/uploads/${genderValue}s/${rawPath}`

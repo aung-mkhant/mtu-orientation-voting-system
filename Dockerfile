@@ -5,56 +5,50 @@
 # This Dockerfile uses Docker Hardened Images (DHI) for enhanced security.
 # For more information, see https://docs.docker.com/dhi/
 
-# Builder stage: install all dependencies and compile TypeScript.
-FROM dhi.io/node:24-alpine3.23-dev AS builder
+ARG NODE_VERSION=24
 
-WORKDIR /app
+################################################################################
+# Use node image for base image for all stages.
+FROM node:${NODE_VERSION}-alpine as base
 
-# Install dependencies as a separate step to take advantage of Docker's
-# caching. Leverage a cache mount to /root/.npm to speed up subsequent
-# builds. Leverage a bind mount to package.json to avoid having to copy
-# it into this layer.
+WORKDIR /usr/src/app
+
+FROM base as dev
+
+COPY package*.json ./
+
 RUN --mount=type=cache,target=/root/.npm \
-    --mount=type=bind,source=package.json,target=package.json \
     npm install
-# Once you create a package-lock.json by running npm install locally, switch to npm ci and bind both files:
-# RUN --mount=type=cache,target=/root/.npm \
-#     --mount=type=bind,source=package.json,target=package.json \
-#     --mount=type=bind,source=package-lock.json,target=package-lock.json \
-#     npm ci
 
-# Copy the source code into the container and compile TypeScript.
 COPY . .
-RUN npm run build
+
+ENV NODE_ENV=development
+
+USER node
+
+CMD ["npm", "run","dev"]
 
 
 # Deps stage: install production dependencies only.
-FROM dhi.io/node:24-alpine3.23-dev AS deps
+FROM base AS deps
 
-WORKDIR /app
+COPY package*.json ./
 
 RUN --mount=type=cache,target=/root/.npm \
-    --mount=type=bind,source=package.json,target=package.json \
-    npm install --omit=dev
-# Once you create a package-lock.json by running npm install locally, switch to npm ci and bind both files:
-# RUN --mount=type=cache,target=/root/.npm \
-#     --mount=type=bind,source=package.json,target=package.json \
-#     --mount=type=bind,source=package-lock.json,target=package-lock.json \
-#     npm ci --omit=dev
-
+    npm ci --omit=dev
 
 # Runner stage: minimal runtime image with compiled app and production deps.
-FROM dhi.io/node:24-alpine3.23 AS runner
+FROM base AS runner
 
-ENV PATH=/app/node_modules/.bin:$PATH
+ENV NODE_ENV=production
 
-WORKDIR /app
+COPY --from=deps --chown=node:node /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node . .
 
-COPY --from=deps --chown=node:node /app/node_modules ./node_modules
-COPY --from=builder --chown=node:node /app/dist ./dist
+USER node
 
 # Expose the port that the application listens on.
 EXPOSE 3000
 
 # Run the application.
-CMD ["node", "dist/index.js"]
+CMD ["node", "server.js"]
