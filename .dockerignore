@@ -15,6 +15,9 @@ data/
 logs/
 certs/
 
+README.md
+ROADMAP.md
+
 Dockerfile
 compose.yaml
 docker-compose.yml
