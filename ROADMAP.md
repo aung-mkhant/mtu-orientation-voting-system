@@ -4,7 +4,7 @@ allow only generated uuids
 
 configuration for production including .env.production
 
-express-rate-limit
+<!-- express-rate-limit -->
 
 healthcheck
 

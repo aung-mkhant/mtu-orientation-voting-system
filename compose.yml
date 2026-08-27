@@ -4,7 +4,7 @@ services:
       context: .
       target: runner
     env_file:
-      - ".env.production"
+      - '.env.production'
     ports:
       - 3000:3000
     depends_on:
@@ -20,7 +20,7 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules # Protects container node_modules from host overwrite
     env_file:
-      - ".env"
+      - '.env'
     ports:
       - 3000:3000
     depends_on:
@@ -31,33 +31,24 @@ services:
   postgres:
     image: postgres:17.4
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
-      POSTGRES_USER_FILE: /run/secrets/pg_user
-      POSTGRES_DB: voting_db
-      POSTGRES_PASSWORD_FILE: /run/secrets/pg_pw
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       TZ: America/Chicago
       PGTZ: America/Chicago
-    secrets:
-      - pg_user
-      - pg_pw
     volumes:
       - postgres_data:/var/lib/postgresql/data
       # - ./logs:/var/log/postgresql
       # - ./certs:/var/lib/postgresql/certs
     healthcheck:
-      test:
-        ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/pg_user) -d voting_db"]
+      test: ['CMD-SHELL', 'pg_isready -U  ${DB_USER} -d ${DB_NAME}']
       interval: 5s
       timeout: 5s
       retries: 5
     restart: unless-stopped
     # network_mode: "host"
 
-secrets:
-  pg_user:
-    file: ./secrets/pg_user.txt
-  pg_pw:
-    file: ./secrets/pg_pw.txt
 volumes:
   postgres_data:

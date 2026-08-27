@@ -1,0 +1,27 @@
+<% nominees.forEach((nominees, index) => { %>
+<% }) %>
+
+<form action="/" method="POST" novalidate class="flex flex-col gap-4">
+  <input type="hidden" name="king" id="input-king" value="" />
+  <input type="hidden" name="queen" id="input-queen" value="" />
+  <input type="hidden" name="smart" id="input-smart" value="" />
+  <input type="hidden" name="style" id="input-style" value="" />
+  <input type="hidden" name="popular" id="input-popular" value="" />
+  <!-- Username Input -->
+  <div class="flex flex-col gap-1">
+    <label for="code">Code</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      value="<%= typeof code !== 'undefined' ? code : (typeof formData !== 'undefined' ? formData.username : '') %>"
+      readonly
+      required
+    />
+  </div>
+  <!-- Submit Button -->
+  <button type="submit">Submit</button>
+</form>
+
+<%- contentFor('title') %>
+Foo Page

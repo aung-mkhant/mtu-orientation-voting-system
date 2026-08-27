@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <%- include('../partials/head'); %>
-  </head>
-  <body class="container">
-    <main>
-      <div class="p-5 mb-4 bg-light rounded-3">
-        <h1>Admin Dashboard</h1>
-      </div>
-    </main>
+<nav class="flex flex-col">
+  <div>Kings</div>
+  <div>Queens</div>
+  <div>Smart</div>
+  <div>Style</div>
+  <div>Popular</div>
+</nav>
+<h1>Admin Dashboard</h1>
 
-    <footer><%- include('../partials/footer'); %></footer>
-  </body>
-</html>
+<% votes.forEach((vote, index) => { %>
+<div class="<%= candidate.imagePath || '/images/default.jpg' %>">
+  <h1><%=  vote.nomineeName %></h1>
+  <h1><%=  vote.nomineeNumber %></h1>
+  <h1><%=  vote.totalVotes %></h1>
+</div>
+<% }) %>
+
+<%- contentFor('title') %>
+Dashboard

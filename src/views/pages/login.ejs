@@ -1,0 +1,32 @@
+<div class="">
+  <% if (typeof error !== 'undefined' && error) { %>
+  <div>
+    <p><%= error %></p>
+  </div>
+  <% } %>
+
+  <form action="/admin/login" method="POST" novalidate>
+    <!-- Username Input -->
+    <div>
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        value="<%= typeof formData !== 'undefined' ? formData.username : '' %>"
+        required
+      />
+    </div>
+
+    <!-- Password Input -->
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+    </div>
+    <!-- Submit Button -->
+    <button type="submit">Log In</button>
+  </form>
+</div>
+
+<%- contentFor('title') %>
+Authentication
