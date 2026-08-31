@@ -1,7 +1,7 @@
-import express, { type Request, type Response } from 'express'
+import express from 'express'
 const router = express.Router()
-import { renderNomineesPage } from '../controllers/nominee.controller.js'
+import { renderNominees } from '../controllers/nominee.controller.js'
 
-router.get('/', renderNomineesPage)
+router.get('/', renderNominees)
 
 export default router

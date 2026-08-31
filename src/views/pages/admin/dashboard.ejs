@@ -1,14 +1,35 @@
 <h1>Admin Dashboard</h1>
 
-<% votes.forEach((vote, index) => { %>
-<div class="<%= vote.imagePath || '/images/default.jpg' %>">
-  <h1><%=  vote.id %></h1>
-  <h1><%=  vote.kingNominee.name %></h1>
-  <h1><%=  vote.queenNominee.name %></h1>
-  <h1><%=  vote.smartNominee.name %></h1>
-  <h1><%=  vote.createdAt %></h1>
-</div>
-<% }) %>
+<table class="table auto">
+  <thead>
+    <tr>
+      <th>King Vote</th>
+      <th>Queen Vote</th>
+      <th>Smart Vote</th>
+      <th>Style Vote</th>
+      <th>Popular Vote</th>
+      <th>Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% votes.forEach((vote) => { %>
+    <tr>
+      <td><%= vote.kingNominee.name %></td>
+      <td><%= vote.queenNominee.name %></td>
+      <td><%= vote.smartNominee.name %></td>
+      <td><%= vote.styleNominee.name %></td>
+      <td><%= vote.popularNominee.name %></td>
+      <td>
+        <%= vote.createdAt.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+          }) %>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
 
 <%- contentFor('title') %>
 Dashboard

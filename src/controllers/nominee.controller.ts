@@ -5,10 +5,11 @@ import {
 } from '../services/nominees.services.js'
 import type { Title } from '../db/schema.js'
 
-export const renderNomineesPage = async (_req: Request, res: Response) => {
+export const renderNominees = async (_req: Request, res: Response) => {
   const nominees = await getNominees()
-  return res.render('pages/index', {
+  return res.render('pages/nominees', {
     nominees,
+    layout: '../views/layouts/public.layout.ejs',
   })
 }
 export const setNomineeTitle = async (req: Request, res: Response) => {

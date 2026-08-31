@@ -1,8 +1,17 @@
+<nav class="flex flex-row">
+<div>King</div>
+<div>Queen</div>
+<div>Smart</div>
+<div>Style</div>
+<div>Popular</div>
+</nav>
+<img src="/uploads/males/1.jpg" elevation="10"></img>
 <% nominees.forEach((nominee, index) => { %>
 <div>
-  <h1><%=  nominee.name %></h1>
+  <!-- <h1><%=  nominee.name %></h1>
   <h1><%=  nominee.major %></h1>
-  <img src="<%= nominee.imagePath %>" />
+  <img src="<%= nominee.imagePath %>" /> -->
+  <button><%= nominee.number %></button>
 </div>
 <% }) %>
 

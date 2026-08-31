@@ -6,8 +6,6 @@ Make sure /results without params return the same data structure as
 Fix redunduncy in getAllNomineesWithVotes like selecting nominee all norminee
 fields fro already included nominee result, append them instead
 
-Currently controller codes are in route files. Fix that ASAP
-
 allow only generated uuids
 
 configuration for production including .env.production
@@ -25,3 +23,4 @@ maybe implement an error page?
 # Stuff done
 
 /admin/login - Admin login successful /nominees - Nominees page rendered
+/nominees - show nominees for voting
