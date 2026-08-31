@@ -10,3 +10,4 @@ export const DB_PORT = process.env.DB_PORT
 export const DB_HOST = process.env.DB_HOST
 export const JWT_SECRET = process.env.JWT_SECRET
 export const DB_URL = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`
+export const STATIC_URL = process.env.STATIC_URL

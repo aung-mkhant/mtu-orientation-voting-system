@@ -2,12 +2,16 @@
   "name": "mtu-selection",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
     "build:css": "postcss ./src/css/style.css -o ./public/css/build.css --watch",
-    "dev": "concurrently \"npm run build:css\" \"tsx --watch src/server.ts\""
+    "dev": "concurrently \"npm run build:css\" \"tsx --watch src/server.ts\"",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:unseed": "tsx src/db/unseed.ts"
   },
   "keywords": [],
   "type": "module",

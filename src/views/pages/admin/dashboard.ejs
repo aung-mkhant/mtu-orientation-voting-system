@@ -1,0 +1,14 @@
+<h1>Admin Dashboard</h1>
+
+<% votes.forEach((vote, index) => { %>
+<div class="<%= vote.imagePath || '/images/default.jpg' %>">
+  <h1><%=  vote.id %></h1>
+  <h1><%=  vote.kingNominee.name %></h1>
+  <h1><%=  vote.queenNominee.name %></h1>
+  <h1><%=  vote.smartNominee.name %></h1>
+  <h1><%=  vote.createdAt %></h1>
+</div>
+<% }) %>
+
+<%- contentFor('title') %>
+Dashboard

@@ -6,7 +6,7 @@ import voteRoutes from './vote.routes.js'
 const router = express.Router()
 
 router.use('/admin', adminRoutes)
-router.use('/nominees', nomineeRoutes)
 router.use('/votes', voteRoutes)
+router.use('/nominees', nomineeRoutes)
 
 export default router

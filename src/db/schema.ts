@@ -1,17 +1,17 @@
-import { pgTable, pgEnum } from 'drizzle-orm/pg-core'
+import { snakeCase, pgEnum } from 'drizzle-orm/pg-core'
 import * as t from 'drizzle-orm/pg-core'
 
 const timestamps = {
-  updated_at: t.timestamp(),
-  created_at: t.timestamp().defaultNow().notNull(),
-  deleted_at: t.timestamp(),
+  updatedAt: t.timestamp(),
+  createdAt: t.timestamp().defaultNow().notNull(),
+  deletedAt: t.timestamp(),
 }
 export function enumToPgEnum<T extends Record<string, any>>(
   myEnum: T,
 ): [T[keyof T], ...T[keyof T][]] {
   return Object.values(myEnum).map((value: any) => `${value}`) as any
 }
-export enum MajorName {
+export enum Major {
   CE = 'CE',
   Archi = 'Archi',
   ME = 'ME',
@@ -24,39 +24,38 @@ export enum MajorName {
   Agri = 'Agri',
   NT = 'NT',
 }
-
-export enum NomineeTitle {
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+}
+export enum Title {
   King = 'King',
   Queen = 'Queen',
   Smart = 'Smart',
   Style = 'Style',
   Popular = 'Popular',
 }
-export const majorNameEnum = pgEnum('name', enumToPgEnum(MajorName))
-export const nomineeTitleEnum = pgEnum('title', enumToPgEnum(NomineeTitle))
+export const majorEnum = pgEnum('name', enumToPgEnum(Major))
+export const titleEnum = pgEnum('title', enumToPgEnum(Title))
+export const genderEnum = pgEnum('gender', enumToPgEnum(Gender))
 
-export const admins = pgTable('admins', {
+export const admins = snakeCase.table('admins', {
   id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
   username: t.varchar({ length: 255 }).notNull().unique(),
   password: t.varchar().notNull(),
   ...timestamps,
 })
-export const majors = pgTable('majors', {
-  id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: majorNameEnum(),
-  ...timestamps,
-})
-export const nominees = pgTable('nominees', {
+export const nominees = snakeCase.table('nominees', {
   id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
   name: t.varchar({ length: 255 }).notNull(),
   number: t.integer().notNull(),
-  gender: t.varchar().notNull(),
-  title: nomineeTitleEnum(),
-  majorId: t.integer('major_id').references(() => majors.id),
+  gender: genderEnum(),
+  title: titleEnum(),
+  major: majorEnum(),
   ...timestamps,
 })
-export const votes = pgTable('votes', {
-  id: t.integer().primaryKey(),
+export const votes = snakeCase.table('votes', {
+  id: t.uuid().primaryKey(),
   kingNomineeId: t
     .integer('king_nominee_id')
     .references(() => nominees.id, { onDelete: 'cascade' }),

@@ -1,0 +1,13 @@
+<h1>Results for :</h1>
+
+<% nominees.forEach((nominee, index) => { %>
+<div class="flex flex-col">
+  <h1><%=  nominee.name %></h1>
+  <h1><%=  nominee.gender %></h1>
+  <h1><%=  nominee.title %></h1>
+  <h1><%=  nominee.totalVotes %></h1>
+</div>
+<% }) %>
+
+<%- contentFor('title') %>
+Results

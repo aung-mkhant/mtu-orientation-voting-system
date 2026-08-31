@@ -3,16 +3,16 @@ import {
   getNominees,
   updateNomineeTitleById,
 } from '../services/nominees.services.js'
-import type { NomineeTitle } from '../db/schema.js'
+import type { Title } from '../db/schema.js'
 
 export const renderNomineesPage = async (_req: Request, res: Response) => {
   const nominees = await getNominees()
-  return res.render('pages/nominees', {
+  return res.render('pages/index', {
     nominees,
   })
 }
 export const setNomineeTitle = async (req: Request, res: Response) => {
-  const { id, title } = req.query as { id: string; title: NomineeTitle }
+  const { id, title } = req.query as { id: string; title: Title }
   if (!id || !title) {
     return res.status(400).json({
       success: false,

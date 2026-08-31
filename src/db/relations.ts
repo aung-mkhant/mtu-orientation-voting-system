@@ -1,13 +1,7 @@
 import { defineRelations } from 'drizzle-orm'
-import { admins, majors, nominees, votes } from './schema.js'
+import { admins, nominees, votes } from './schema.js'
 
-const relations = defineRelations({ admins, nominees, majors, votes }, (r) => ({
-  nominees: {
-    major: r.one.majors({
-      from: r.nominees.majorId,
-      to: r.majors.id,
-    }),
-  },
+const relations = defineRelations({ admins, nominees, votes }, (r) => ({
   votes: {
     kingNominee: r.one.nominees({
       from: r.votes.kingNomineeId,

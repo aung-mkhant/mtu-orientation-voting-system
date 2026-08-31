@@ -5,7 +5,7 @@ export const adminLogin = async (req: Request, res: Response) => {
   const { username, password } = req.body
   const authResult = await authenticateAdmin(username, password)
   if (!authResult) {
-    return res.status(401).render('pages/login', {
+    return res.status(401).render('pages/admin/login', {
       error: 'Invalid username or password',
     })
   }

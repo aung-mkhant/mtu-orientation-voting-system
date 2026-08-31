@@ -9,7 +9,7 @@ type QRRecord = {
   uuid: string
   qr_code: string
 }
-const generateUuids = (count: number) => {
+export const generateUuids = (count: number) => {
   const uuidArray = []
   for (let i = 0; i < count; i++) {
     uuidArray.push(crypto.randomUUID())
@@ -17,7 +17,7 @@ const generateUuids = (count: number) => {
   return uuidArray
 }
 
-const generateRecords = (uuids: string[]): Promise<QRRecord[]> => {
+export const generateRecords = (uuids: string[]): Promise<QRRecord[]> => {
   return Promise.all(
     uuids.map((uuid) =>
       QRCode.toDataURL(uuid).then((qr_code: string) => {
@@ -27,7 +27,7 @@ const generateRecords = (uuids: string[]): Promise<QRRecord[]> => {
   )
 }
 
-const generateQRImages = (dirPath: string, uuids: string[]) => {
+export const generateQRImages = (dirPath: string, uuids: string[]) => {
   return Promise.all(
     uuids.map((uuid) =>
       QRCode.toFile(path.join(dirPath, `${uuid}.png`), String(uuid), {
@@ -38,7 +38,7 @@ const generateQRImages = (dirPath: string, uuids: string[]) => {
     ),
   )
 }
-const exportCSV = async (records: QRRecord[]) => {
+export const exportCSV = async (records: QRRecord[]) => {
   const csvData = stringify(records, {
     header: true,
     columns: [
@@ -52,7 +52,7 @@ const exportCSV = async (records: QRRecord[]) => {
   )
 }
 
-const generate = async () => {
+const main = async () => {
   try {
     let uuidArray = generateUuids(totalCount)
     const records = await generateRecords(uuidArray)
@@ -69,4 +69,4 @@ const generate = async () => {
   }
 }
 
-generate()
+main()

@@ -1,0 +1,21 @@
+<h1>All Nominees</h1>
+
+<% nominees.forEach((nominee) => { %>
+<div class="">
+  <p>
+    ID:
+    <%= nominee.id %>
+  </p>
+  <p>Name: <%= nominee.name %></p>
+  <p>Gender: <%= nominee.gender %></p>
+  <p>Number: <%= nominee.number %></p>
+  <p>King Votes: <%= nominee.kingVotes %></p>
+  <p>Queen Votes: <%= nominee.queenVotes %></p>
+  <p>Smart Votes: <%= nominee.smartVotes %></p>
+  <p>Style Votes: <%= nominee.styleVotes %></p>
+  <p>Popular Votes: <%= nominee.popularVotes %></p>
+</div>
+<% }) %>
+
+<%- contentFor('title') %>
+Dashboard
